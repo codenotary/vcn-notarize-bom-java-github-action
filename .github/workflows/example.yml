@@ -21,6 +21,11 @@ jobs:
         run: mvn --batch-mode --update-snapshots compile
 
       - name: Notarize Java Maven project with BoM
+        # This 'env' block is necessary because github actions will try to pass the current variables for JAVA_HOME and JDK_HOME to the container
+        # only include this if your workflow uses the 'setup-java' actions or sets those environment varialbes (JAVA_HOME, PATH)
+        env:
+           JAVA_HOME: /usr/local/openjdk-17
+           PATH: /usr/local/openjdk-17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
         #--> Run the GitHub action
         # uses: codenotary/vcn-notarize-bom-java-github-action@v1.0.0
         uses: codenotary/vcn-notarize-bom-java-github-action@main
@@ -40,6 +45,11 @@ jobs:
         run: mvn --batch-mode --update-snapshots verify
 
       - name: Notarize JAR with BoM
+        # This 'env' block is necessary because github actions will try to pass the current variables for JAVA_HOME and JDK_HOME to the container
+        # only include this if your workflow uses the 'setup-java' actions or sets those environment varialbes (JAVA_HOME, PATH)
+        env:
+           JAVA_HOME: /usr/local/openjdk-17
+           PATH: /usr/local/openjdk-17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
         #--> Run the GitHub action
         # uses: codenotary/vcn-notarize-bom-java-github-action@v1.0.0
         uses: codenotary/vcn-notarize-bom-java-github-action@main
